@@ -1,0 +1,266 @@
+*{
+    margin: none;
+    padding: none;
+    list-style: none;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+body {
+   
+}
+
+header {
+    margin-bottom: 5px;
+}
+
+header h1 {
+    text-align: center;
+    font-size: 25px;
+}
+
+main {
+    /* display: flex;
+    flex-direction: column;
+    align-items: center; */
+}
+
+.videoplayer{
+    margin: 0px auto;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 10px;
+    position: relative;
+    width: 95%;
+}
+
+div#CTA {
+    font-size: small;    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   
+}
+
+div#CTA input{
+    color: white;
+    background-color: black;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.video {
+    width: 100%;
+    height: 50vmin;
+}
+
+video {
+    width: 100%;
+    height: 100%;
+}
+
+.control-container {
+    width: 100%;
+    background-color: black;
+    display: none;
+    color: white;
+    flex-direction: column;
+    align-items: center;
+}
+
+.timer {
+    width: 90%;
+}
+
+.total-duration {
+    margin: 7px 5px 0px;
+    width: 100%;
+    height: 5px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.total-duration:hover .timeline{
+    height: 100%;
+}
+
+.timeline {
+    background-color: grey;
+    position: relative;
+    width: 100%;
+    height: 3px;
+    transition: 150ms ease-in-out;
+}
+
+.timeline::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    right: calc(100% - var(55px));
+    background-color: whitesmoke;
+    display: none;
+}
+
+.timeline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: calc(100% - var(--currentPos) * 100%);
+    background-color: blue;
+}
+
+.tracker{
+    height: 200%;
+    border-radius: 50%;
+    background-color: blue;
+    position: absolute;
+    aspect-ratio: 1/1;
+    top: -50%;
+    left: calc();
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.current-time {
+    
+    width: 20%;
+    height: 100%;
+    background-color: red;
+    display: inline-block;
+    margin-right: -4px;
+    
+}
+
+.control {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.control-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.control-buttons button {
+    border-radius: 4px;
+    margin: 0px 10px;
+    cursor: pointer;
+}
+
+button.pp {
+    position: relative;
+    height: 30px;
+    width: 30px;
+}
+
+button.pp.paused span#pause {
+    display: none;
+}
+
+button.pp:not(.paused) span#play {
+    display: none;
+}
+
+button#pp p{
+
+    display: inline-block;
+    background-color: white;
+}
+
+.active {
+    display: flex;
+}
+
+
+/* header {
+    width: 80%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+}
+
+main {
+    width: 95%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.videoplayer {
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 10px;
+    width: 50%;
+    position: relative;
+}
+
+p#CTA {
+    font-weight: bold;
+    font-size: 20px;
+    position: absolute;
+    margin-inline: 20%;
+   
+}
+
+.video {
+    width: 90%;
+    height: 47vh;
+    margin: 5px;
+    padding:15px;
+   
+}
+
+
+button#track {
+    transform: translateY(-2.5px);
+    border-radius: 50%;
+    border: none;
+    padding: 6px;
+    gap: none;
+    display: inline;
+}
+
+.volume { 
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    width: 100px;
+    cursor: pointer;
+}
+
+.slider {
+    width: 0px;
+    transform: scaleX(0);
+    border-radius: 3px;
+    /* margin-left: 2px; 
+    transition: 
+        width 160ms ease-out,
+        transform 160ms ease-out;
+}
+
+.volume:hover .slider{
+    width: 80px;
+    transform: scaleX(1);
+}
+
+p.time {
+    width: 100px;
+}
+
+
+
+.trim {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 4px;
+    width: min-content;
+}
+
+.trim input {
+    margin-top: 5px;
+    padding: 3px;
+} */

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>video trimmer</title>
+    <link rel="stylesheet" href="videoTrimmer.css">
+    <script type="text/javascript" src="videoTrimmer.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Video trimmer</h1>
+    </header>
+    <main>
+        <div class="videoplayer">
+            <div id="CTA">
+                <p>Click on choose file to add video</p>
+                <form action="">
+                    <input type="file" name="videofile" id="videofile" accept="video/*">
+                    <!-- <button>trim</button> -->
+                </form>
+            </div>
+            <div class="video">
+                <video></video>
+            </div>
+            <div class="control-container" >
+                <div class="timer">
+                    <div class="total-duration" >
+                        <div class="timeline">
+                            <div class="tracker"></div>
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="control">
+                    <div class="volume">
+                        <p>V </p>
+                        <input type="range" class="slider" min="0" max="10" value="10" step="any">
+                    </div>
+                    <div class="control-buttons">
+                        <button id="rewine">rr</button>
+                        <button class="pp paused" data-pp >
+                            <span id="play">PA</span>
+                            <span id="pause">PU</span>
+                        </button>
+                        <button id="forward">ff</button>
+                    </div>
+                    <p class="time"><span id="reading"></span>/<span id="duration"></span> </p> 
+                </div>
+            </div>
+        </div>
+        <div class="insert">
+           
+            <div class="trim">
+                <label for="start">Trim-start-time</label><br>
+                <input type="number" name="" id="start"><br>
+                <label for="start">Trim-stop-time</label><br>
+                <input type="number"><br>
+                <label for="start">Split video time</label><br>
+                <input type="number">
+            </div>
+        </div>
+    </main>
+</body>
+</html>
