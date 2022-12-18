@@ -43,17 +43,40 @@ videoinput.addEventListener('change',e=>{
 
 totalTimeline.addEventListener('mousemove', updateTimeline)
 totalTimeline.addEventListener('mousedown', changeScrubbing)
+document.addEventListener('mouseup', e=> {
+    let sqr = totalTimeline.getBoundingClientRect()
+    const percentage = Math.min(Math.max(0, e.x -sqr.x),sqr.width)/sqr.width
+    if (scrubbing) {
+    scrubbing = !scrubbing
+    if (video.paused) video.play()
+    playPauseButton.classList.toggle('paused')
+    video.currentTime = percentage * video.duration
+    }
+    // changeScrubbing(e)
+})
+
+document.addEventListener('mousemove', e=> {
+    if (scrubbing) updateTimeline(e)
+})
 
 let scrubbing = false
 function changeScrubbing(e){
-    if (e.buttons === 1){
     let sqr = totalTimeline.getBoundingClientRect()
     const percentage = Math.min(Math.max(0, e.x -sqr.x),sqr.width)/sqr.width
-    scrubbing = true
-    video.currentTime = percentage * video.duration
-    // trackButton.style.setProperty('--currentPosition',percentage)
+    if (e.buttons===1){
+        scrubbing = !scrubbing
+        if (scrubbing){
+            video.pause()
+            playPauseButton.classList.toggle('paused')
+            } 
+        video.currentTime = percentage * video.duration
+        updateTimeline(e)
     }
+    // scrubbing= (e.buttons & 1)===1
+    // totalTimeline.classList.toggle('scrubbing', scrubbing)
+    // video.currentTime = percentage * video.duration   
 }
+
 function updateTimeline(e){
    let sqr = totalTimeline.getBoundingClientRect()
    const percentage = Math.min(Math.max(0, e.x -sqr.x),sqr.width)/sqr.width
@@ -64,11 +87,6 @@ function updateTimeline(e){
     trackButton.style.setProperty('--currentPosition',percentage)
    }
 } 
-
-totalTimeline.onmousedown = (e)=> { 
-   
-   
-}
 
 playPauseButton.addEventListener('click',e=>{
     if (videoinput!=0){
