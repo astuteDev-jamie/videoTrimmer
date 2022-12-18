@@ -16,10 +16,7 @@
         <div class="videoplayer">
             <div id="CTA">
                 <p>Click on choose file to add video</p>
-                <form action="">
                     <input type="file" name="videofile" id="videofile" accept="video/*">
-                    <!-- <button>trim</button> -->
-                </form>
             </div>
             <div class="video">
                 <video></video>
@@ -27,26 +24,35 @@
             <div class="control-container" >
                 <div class="timer">
                     <div class="total-duration" >
-                        <div class="timeline">
-                            <div class="tracker"></div>
+                        <div class="timeline" id="timeline">
+                            <div class="tracker" id="tracker"></div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="12" viewBox="0 0 24 24" class="left"><path d="M2 24v-24l20 12-20 12z"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="12" viewBox="0 0 24 24" class="right"><path d="M2 24v-24l20 12-20 12z"/></svg>
                         </div>
                     </div>
                    
                 </div>
                 <div class="control">
                     <div class="volume">
-                        <p>V </p>
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="16" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 15h-3v-6h3v6zm6 3l-5-3v-6l5-3v12z"/></svg>
+                        </span>
                         <input type="range" class="slider" min="0" max="10" value="10" step="any">
                     </div>
                     <div class="control-buttons">
-                        <button id="rewine">rr</button>
-                        <button class="pp paused" data-pp >
-                            <span id="play">PA</span>
-                            <span id="pause">PU</span>
+                        <button id="rewine">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="12" viewBox="0 0 24 24"><path d="M12 12l12-7v14l-12-7zm-12 0l12-7v14l-12-7z"/></svg>
                         </button>
-                        <button id="forward">ff</button>
+                        <button class="pp paused" data-pp >
+                            <span id="play"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="12" viewBox="0 0 24 24"><path d="M2 24v-24l20 12-20 12z"/></svg></span>
+                            <span id="pause"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="12" viewBox="0 0 24 24"><path d="M10 24h-6v-24h6v24zm10-24h-6v24h6v-24z"/></svg></span>
+                        </button>
+                        <button id="forward"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="12" viewBox="0 0 24 24"><path d="M0 19v-14l12 7-12 7zm12 0v-14l12 7-12 7z"/></svg></button>
                     </div>
-                    <p class="time"><span id="reading"></span>/<span id="duration"></span> </p> 
+                    <div class="time">
+                        <p><span id="reading">--:--</span>/<span id="duration">--:--</span> </p> 
+                    </div>
+                    
                 </div>
             </div>
         </div>

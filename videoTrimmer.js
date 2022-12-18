@@ -10,9 +10,12 @@ const time = document.querySelector('p.time')
 const reading = document.querySelector('span#reading')
 const duration = document.querySelector('span#duration')
 const totalTimeline = document.querySelector('.total-duration')
-const currentTimeline = document.querySelector('.timeline')
+const currentTimeline = document.getElementById('timeline')
+const trackButton = document.getElementById('tracker')
+const trimLeftBtn = document.querySelector('svg.left')
+const trimRightBtn = document.querySelector('svg.right')
 
-const counting = document.querySelector('.current-time')
+
 
 
 videoinput.addEventListener('change',e=>{
@@ -30,7 +33,8 @@ videoinput.addEventListener('change',e=>{
     video.ontimeupdate= (e)=> {
         reading.textContent= logTime(video.currentTime)
         const percent = video.currentTime/video.duration
-        currentPos = percent
+        trackButton.style.setProperty('--currentPosition',percent)
+        currentTimeline.style.setProperty('--currentPos',percent)
     }
     video.onended = ()=> {
         playPauseButton.classList.add('paused')
@@ -38,11 +42,33 @@ videoinput.addEventListener('change',e=>{
 })
 
 totalTimeline.addEventListener('mousemove', updateTimeline)
+totalTimeline.addEventListener('mousedown', changeScrubbing)
 
+let scrubbing = false
+function changeScrubbing(e){
+    if (e.buttons === 1){
+    let sqr = totalTimeline.getBoundingClientRect()
+    const percentage = Math.min(Math.max(0, e.x -sqr.x),sqr.width)/sqr.width
+    scrubbing = true
+    video.currentTime = percentage * video.duration
+    // trackButton.style.setProperty('--currentPosition',percentage)
+    }
+}
 function updateTimeline(e){
    let sqr = totalTimeline.getBoundingClientRect()
    const percentage = Math.min(Math.max(0, e.x -sqr.x),sqr.width)/sqr.width
+   currentTimeline.style.setProperty('--preview',percentage)
+
+   if (scrubbing){
+    currentTimeline.style.setProperty('--currentPos',percentage)
+    trackButton.style.setProperty('--currentPosition',percentage)
+   }
 } 
+
+totalTimeline.onmousedown = (e)=> { 
+   
+   
+}
 
 playPauseButton.addEventListener('click',e=>{
     if (videoinput!=0){

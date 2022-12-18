@@ -19,9 +19,9 @@ header h1 {
 }
 
 main {
-    /* display: flex;
+    display: flex;
     flex-direction: column;
-    align-items: center; */
+    align-items: center;
 }
 
 .videoplayer{
@@ -31,14 +31,13 @@ main {
     padding: 10px;
     position: relative;
     width: 95%;
-}
-
-div#CTA {
-    font-size: small;    
     display: flex;
     flex-direction: column;
     align-items: center;
-   
+}
+
+div#CTA {
+    font-size: small;  
 }
 
 div#CTA input{
@@ -49,8 +48,9 @@ div#CTA input{
 }
 
 .video {
-    width: 100%;
+    width: 95%;
     height: 50vmin;
+    margin-bottom: 2px;
 }
 
 video {
@@ -59,20 +59,21 @@ video {
 }
 
 .control-container {
-    width: 100%;
+    width: 95%;
     background-color: black;
-    display: none;
-    color: white;
+    padding: 5px;
+    margin-inline: auto;
+    /* display: none; */
     flex-direction: column;
-    align-items: center;
+    color: white;
 }
 
 .timer {
     width: 90%;
+    margin:2px auto;
 }
 
 .total-duration {
-    margin: 7px 5px 0px;
     width: 100%;
     height: 5px;
     display: flex;
@@ -96,9 +97,15 @@ video {
     content: "";
     position: absolute;
     left: 0;
-    right: calc(100% - var(55px));
+    top: 0;
+    bottom: 0;
+    right: calc(100% - var(--preview) * 100%);
     background-color: whitesmoke;
-    display: none;
+    display: none; 
+}
+
+.total-duration:hover .timeline::before {
+    display: block;
 }
 
 .timeline::after {
@@ -118,43 +125,70 @@ video {
     position: absolute;
     aspect-ratio: 1/1;
     top: -50%;
-    left: calc();
+    left: calc(0% + var(--currentPosition) * 100%);
+    /* right: calc(100% - var(--currentPosition) * 100%); */
     transform: translateX(-50%);
     z-index: 1;
 }
 
-.current-time {
-    
-    width: 20%;
-    height: 100%;
+.timeline svg.left {
+    height: 400%;
     background-color: red;
-    display: inline-block;
-    margin-right: -4px;
-    
+    position: absolute;
+    aspect-ratio: 1/1;
+    top: -110%;
+    left:25px;
+    /* left: calc(0% + var(--preview) * 100%); */
+    transform: rotateX(360deg);
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.timeline svg.right {
+    height: 400%;
+    background-color: red;
+    position: absolute;
+    aspect-ratio: 1/1;
+    top: -110%;
+    right: 5px;
+    /* left: calc(0% + var(--preview) * 100%); */
+    transform: rotateX(360deg);
+    transform: translateX(-50%);
+    z-index: 1;
 }
 
 .control {
     width: 90%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    margin: 0px auto;
 }
 
 .control-buttons {
     display: flex;
     justify-content: center;
+    width: 30%;
 }
 
 .control-buttons button {
-    border-radius: 4px;
-    margin: 0px 10px;
+    border-radius: 3px;
+    margin: 0px 6px;
     cursor: pointer;
+    padding: 2px 1px;
+    width: 27%;
+    /* background-color: black; */
+    border: none;
+}
+
+svg {
+   background-color: white;
 }
 
 button.pp {
     position: relative;
-    height: 30px;
-    width: 30px;
+    /* height: 30px;
+    width: 30px; */
 }
 
 button.pp.paused span#pause {
@@ -175,6 +209,51 @@ button#pp p{
     display: flex;
 }
 
+.volume { 
+    width: 30%;
+    padding: 2px;
+    cursor: pointer;
+    position: relative;
+}
+
+.volume span{
+    font-size: small;
+}
+
+.slider {
+    width: 0px;
+    height: 3px;
+    transform: scaleX(0);
+    border-radius: 3px;
+    position: relative;
+    top: -4px;
+    /* margin-left: 2px; 
+    transition: 
+        width 160ms ease-out,
+        transform 160ms ease-out;*/
+}
+
+.volume:hover .slider{
+    width: 50%;
+    transform: scaleX(1);
+}
+
+div.time {
+    width: 30%;
+}
+
+.time p{
+   float: right;
+   font-size: calc(10px + 0.4vmin);
+}
+
+.trim {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 4px;
+    width: min-content;
+}
 
 /* header {
     width: 80%;
@@ -223,32 +302,8 @@ button#track {
     display: inline;
 }
 
-.volume { 
-    display: flex;
-    align-items: center;
-    padding: 2px;
-    width: 100px;
-    cursor: pointer;
-}
 
-.slider {
-    width: 0px;
-    transform: scaleX(0);
-    border-radius: 3px;
-    /* margin-left: 2px; 
-    transition: 
-        width 160ms ease-out,
-        transform 160ms ease-out;
-}
 
-.volume:hover .slider{
-    width: 80px;
-    transform: scaleX(1);
-}
-
-p.time {
-    width: 100px;
-}
 
 
 
