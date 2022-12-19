@@ -79,6 +79,7 @@ video {
     display: flex;
     align-items: center;
     cursor: pointer;
+    position: relative;
 }
 
 .total-duration:hover .timeline{
@@ -131,30 +132,30 @@ video {
     z-index: 1;
 }
 
-.timeline svg.left {
-    height: 400%;
+div.left {
+    height: 12px;
     background-color: red;
     position: absolute;
     aspect-ratio: 1/1;
-    top: -110%;
-    left:25px;
-    /* left: calc(0% + var(--preview) * 100%); */
+    top: 0%;
+    left: 0px;
+    /* left: calc(0% + var(--l-Bound) * 100%); */
     transform: rotateX(360deg);
     transform: translateX(-50%);
-    z-index: 1;
+    z-index: 2;
 }
 
-.timeline svg.right {
-    height: 400%;
+div.right {
+    height: 12px;
     background-color: red;
     position: absolute;
     aspect-ratio: 1/1;
-    top: -110%;
+    top: 0%;
     right: 5px;
     /* left: calc(0% + var(--preview) * 100%); */
     transform: rotateX(360deg);
     transform: translateX(-50%);
-    z-index: 1;
+    z-index: 2;
 }
 
 .control {
@@ -247,7 +248,15 @@ div.time {
    font-size: calc(10px + 0.4vmin);
 }
 
-.trim {
+#trim-button {
+    min-width: 270px;;
+    padding: 3px ;
+    margin-top: 5px;
+    background-color: black;
+    color: white;
+}
+
+.trim-container{
     margin-top: 20px;
     padding: 10px;
     border: 1px solid black;

@@ -16,6 +16,24 @@ const trimLeftBtn = document.querySelector('svg.left')
 const trimRightBtn = document.querySelector('svg.right')
 
 
+// trimLeftBtn.addEventListener('mousedown',)
+
+let lrBound =false
+function pinPosition(){
+    let sqr = totalTimeline.getBoundingClientRect()
+    const percentage = Math.min(Math.max(0, e.x -sqr.x),sqr.width)/sqr.width
+    if (e.buttons===1){
+       lrBound = !lrBound
+        if (lrBound){
+            video.pause()
+            playPauseButton.classList.toggle('paused')
+            } 
+        // video.currentTime = percentage * video.duration
+        // updateTimeline(e)
+    }
+}
+
+
 
 
 videoinput.addEventListener('change',e=>{
@@ -83,8 +101,13 @@ function updateTimeline(e){
    currentTimeline.style.setProperty('--preview',percentage)
 
    if (scrubbing){
+    e.preventDefault()
     currentTimeline.style.setProperty('--currentPos',percentage)
     trackButton.style.setProperty('--currentPosition',percentage)
+   }
+
+   if (lrBound){
+    trimLeftBtn.style.setProperty('--')
    }
 } 
 
