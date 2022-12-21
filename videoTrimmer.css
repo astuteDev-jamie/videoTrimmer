@@ -9,6 +9,10 @@ body {
    
 }
 
+[hidden]{
+    display: none;
+}
+
 header {
     margin-bottom: 5px;
 }
@@ -63,7 +67,7 @@ video {
     background-color: black;
     padding: 5px;
     margin-inline: auto;
-    /* display: none; */
+    display: none;
     flex-direction: column;
     color: white;
 }
@@ -74,6 +78,7 @@ video {
 }
 
 .total-duration {
+    background-color: rgb(56, 56, 56);
     width: 100%;
     height: 5px;
     display: flex;
@@ -87,7 +92,7 @@ video {
 }
 
 .timeline {
-    background-color: grey;
+    background-color: rgb(140, 139, 139);
     position: relative;
     width: 100%;
     height: 3px;
@@ -101,7 +106,7 @@ video {
     top: 0;
     bottom: 0;
     right: calc(100% - var(--preview) * 100%);
-    background-color: whitesmoke;
+    background-color: rgb(192, 192, 192);
     display: none; 
 }
 
@@ -127,33 +132,40 @@ video {
     aspect-ratio: 1/1;
     top: -50%;
     left: calc(0% + var(--currentPosition) * 100%);
-    /* right: calc(100% - var(--currentPosition) * 100%); */
     transform: translateX(-50%);
     z-index: 1;
 }
 
 div.left {
-    height: 12px;
-    background-color: red;
+    border-bottom: 16px solid red;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
     position: absolute;
-    aspect-ratio: 1/1;
     top: 0%;
-    left: 0px;
-    /* left: calc(0% + var(--l-Bound) * 100%); */
-    transform: rotateX(360deg);
+    left: calc(0% + var(--bound) * 100%);
     transform: translateX(-50%);
     z-index: 2;
 }
 
-div.right {
-    height: 12px;
+div.left::before {
+    content:'';
+    top: inherit;
+    height: 5px;
+    left: 0px;
+    width:calc(100% + var(--dist));
     background-color: red;
     position: absolute;
-    aspect-ratio: 1/1;
+    z-index: 2;
+
+}
+
+div.right {
+    border-bottom: 16px solid red;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    position: absolute;
     top: 0%;
-    right: 5px;
-    /* left: calc(0% + var(--preview) * 100%); */
-    transform: rotateX(360deg);
+    left: calc(0% + var(--bound) * 100%);
     transform: translateX(-50%);
     z-index: 2;
 }
@@ -249,6 +261,8 @@ div.time {
 }
 
 #trim-button {
+    border-radius: 4px;
+    cursor: pointer;
     min-width: 270px;;
     padding: 3px ;
     margin-top: 5px;
