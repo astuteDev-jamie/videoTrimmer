@@ -9,6 +9,27 @@ body {
    
 }
 
+.strip {
+    width: 500px;
+    height: 7px;
+    background-color: grey;
+    border-radius: 3px;
+    cursor: pointer;
+    touch-action: none;
+    position: relative;
+}
+
+.thumb {
+    height: 200%;
+    transform:translateY(-25%);
+    aspect-ratio: 1/2;
+    background-color: blue;
+    border-radius: 2px;
+    position: relative;
+    left: calc(0% + var(--currentPosition) * 100%);
+    z-index: 2;
+}
+
 [hidden]{
     display: none;
 }
@@ -64,12 +85,14 @@ video {
 
 .control-container {
     width: 95%;
+    border-radius: 5px;
     background-color: black;
     padding: 5px;
     margin-inline: auto;
     display: none;
     flex-direction: column;
     color: white;
+    /* touch-action: pan-y; */
 }
 
 .timer {
@@ -85,6 +108,8 @@ video {
     align-items: center;
     cursor: pointer;
     position: relative;
+    border-radius: 4px;
+    touch-action: none;
 }
 
 .total-duration:hover .timeline{
@@ -97,6 +122,7 @@ video {
     width: 100%;
     height: 3px;
     transition: 150ms ease-in-out;
+    border-radius: 4px;
 }
 
 .timeline::before{
@@ -108,6 +134,7 @@ video {
     right: calc(100% - var(--preview) * 100%);
     background-color: rgb(192, 192, 192);
     display: none; 
+    border-radius: 4px;
 }
 
 .total-duration:hover .timeline::before {
@@ -122,6 +149,7 @@ video {
     bottom: 0;
     right: calc(100% - var(--currentPos) * 100%);
     background-color: blue;
+    border-radius: 4px;
 }
 
 .tracker{
@@ -145,6 +173,7 @@ div.left {
     left: calc(0% + var(--bound) * 100%);
     transform: translateX(-50%);
     z-index: 2;
+   
 }
 
 div.left::before {
@@ -168,6 +197,43 @@ div.right {
     left: calc(0% + var(--bound) * 100%);
     transform: translateX(-50%);
     z-index: 2;
+    
+}
+
+.left span{
+    border-radius: 2px;
+    position: absolute;
+    bottom: calc(100% + 16px);
+    outline: 1px solid black;
+    color: black;
+    width: fit-content;
+    padding: 1px;
+    left:-6px
+}
+
+.left span::before{
+    content: "V";
+    /* outline: 1px solid black; */
+    position: absolute;
+    top: 90%;
+}
+
+.right span::before{
+    content: "V";
+    /* outline: 1px solid black; */
+    position: absolute;
+    top: 90%;
+}
+
+.right span{
+    border-radius: 2px;
+    position: absolute;
+    bottom: calc(100% + 16px);
+    outline: 1px solid black;
+    color: black;
+    width: fit-content;
+    padding: 1px;
+    left:-6px
 }
 
 .control {
