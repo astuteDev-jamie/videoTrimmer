@@ -9,27 +9,6 @@ body {
    
 }
 
-.strip {
-    width: 500px;
-    height: 7px;
-    background-color: grey;
-    border-radius: 3px;
-    cursor: pointer;
-    touch-action: none;
-    position: relative;
-}
-
-.thumb {
-    height: 200%;
-    transform:translateY(-25%);
-    aspect-ratio: 1/2;
-    background-color: blue;
-    border-radius: 2px;
-    position: relative;
-    left: calc(0% + var(--currentPosition) * 100%);
-    z-index: 2;
-}
-
 [hidden]{
     display: none;
 }
@@ -201,6 +180,7 @@ div.right {
 }
 
 .left span{
+    background-color: yellow;
     border-radius: 2px;
     position: absolute;
     bottom: calc(100% + 16px);
@@ -208,7 +188,8 @@ div.right {
     color: black;
     width: fit-content;
     padding: 1px;
-    left:-6px
+    left:-6px;
+    font-size: x-small;
 }
 
 .left span::before{
@@ -226,6 +207,7 @@ div.right {
 }
 
 .right span{
+    background-color: yellow;
     border-radius: 2px;
     position: absolute;
     bottom: calc(100% + 16px);
@@ -233,7 +215,8 @@ div.right {
     color: black;
     width: fit-content;
     padding: 1px;
-    left:-6px
+    left:-6px;
+    font-size: x-small;
 }
 
 .control {

@@ -15,70 +15,39 @@ const trackButton = document.getElementById('tracker')
 const trimLeftBtn = document.querySelector('div.left')
 const trimRightBtn = document.querySelector('div.right')
 const trimBtn = document.getElementById('trim-button')
-const LtrimText = document.getElementById('.left span')
-const RtrimText = document.getElementById('.right span')
-const slider = document.querySelector('.strip')
-const thumb = document.querySelector('.thumb')
+const LtrimText = document.querySelector('.left span')
+const RtrimText = document.querySelector('.right span')
 
-// trimLeftBtn.addEventListener('mousedown touchstart',)
-videoinput.addEventListener('change',e=>{
-    // h3.innerText=''
+const startfig = document.querySelector('#startf')
+let radix;
+
+videoinput.addEventListener('change',e => {
     CTA.style.display='none'
-    let file = videoinput.files[0]
     document.querySelector('.control-container').classList.add('active')
+    let file = videoinput.files[0]
     const blob = URL.createObjectURL(file)
     document.querySelector("video").src = blob
-    //time display
-    video.onloadeddata = ()=> {
-        reading.textContent= logTime(video.currentTime)
-        duration.textContent= logTime(video.duration)
-    }
-    video.ontimeupdate= (e)=> {
-        reading.textContent= logTime(video.currentTime)
-        const percent = video.currentTime/video.duration
-        trackButton.style.setProperty('--currentPosition',percent)
-        currentTimeline.style.setProperty('--currentPos',percent)
-    }
-    video.onended = ()=> {
-        playPauseButton.classList.add('paused')
-    }
+    console.log(blob)
 })
 
-// totalTimeline.addEventListener('pointermove', updateTimeline)
+video.onloadeddata = ()=> {
+    reading.textContent= logTime(video.currentTime)
+    duration.textContent= logTime(video.duration)
+}
+video.ontimeupdate= (e)=> {
+    reading.textContent= logTime(video.currentTime)
+    const percent = video.currentTime/video.duration
+    trackButton.style.setProperty('--currentPosition',percent)
+    currentTimeline.style.setProperty('--currentPos',percent)
+    startfig.value = video.currentTime
+}
+video.onended = ()=> {
+    playPauseButton.classList.add('paused')
+}
+
+
+
 totalTimeline.addEventListener('pointerdown', changeScrubbing)
-// document.addEventListener('pointereup', e=> {
-//     updateTimeline(e)
-//     let sqr = totalTimeline.getBoundingClientRect()
-//     const percentage = Math.min(Math.max(0, e.x -sqr.x),sqr.width)/sqr.width
-//     let rightSqr = trimRightBtn.getBoundingClientRect()
-//     let leftSqr = trimLeftBtn.getBoundingClientRect()
-//     let leftWidth = `${rightSqr.x - leftSqr.x}px`
-//     trimLeftBtn.style.setProperty('--dist',leftWidth)
-
-//     if (scrubbing) {
-//     scrubbing = !scrubbing
-//         if (video.paused) video.play()
-//         playPauseButton.classList.toggle('paused')
-//         video.currentTime = percentage * video.duration
-//     }
-//     if (lBound){
-//         lBound= !lBound
-//     }
-//     if (rBound){
-//         rBound = !rBound
-//     }
-// })
-
-// document.addEventListener('pointermove', e=> {
-//     e.preventDefault()
-//     if (scrubbing || lBound || rBound) updateTimeline(e)
-
-// })
-
-let lBound =false
-let rBound =false
-let scrubbing = false
-
 
 function changeScrubbing(e){
     let sqr = totalTimeline.getBoundingClientRect()
@@ -99,7 +68,7 @@ function changeScrubbing(e){
     }else if(e.target==trimRightBtn & !trimRightBtn.hasAttribute('hidden')){
         console.log('right')
         trimRightBtn.setPointerCapture(e.pointerId);
-    }
+    }console.log(video.currentTime)
   
     totalTimeline.onpointermove = function(e) {
         let sqr = totalTimeline.getBoundingClientRect()
@@ -107,7 +76,12 @@ function changeScrubbing(e){
         let leftSqr = trimLeftBtn.getBoundingClientRect()
         const percentage = Math.min(Math.max(0, e.x -sqr.x),sqr.width)/sqr.width
         const leftWidth = `${rightSqr.x - leftSqr.x}px`
+        let LValue = leftSqr.x/ sqr.width * video.duration
+        let RValue = rightSqr.x/ sqr.width * video.duration
         currentTimeline.style.setProperty('--preview',percentage)
+        LtrimText.textContent = LValue.toFixed(4)
+        RtrimText.textContent = RValue.toFixed(4)
+        
 
         if (e.target == trackButton){
             trackButton.style.setProperty('--currentPosition',percentage)
@@ -115,9 +89,14 @@ function changeScrubbing(e){
         }
 
         if (e.target ==  trimLeftBtn){
-            console.log(e.pointerId)
+            console.log(e.pointerId, video.duration)
             trimLeftBtn.style.setProperty('--bound',percentage)
             trimLeftBtn.style.setProperty('--dist',leftWidth)
+            video.currentTime = LValue
+            if (!playPauseButton.classList.contains('paused')){
+                 video.pause()
+                 playPauseButton.classList.toggle('paused')
+             } 
         }
 
         if (e.target == trimRightBtn){
@@ -157,29 +136,6 @@ function changeScrubbing(e){
     };
 }
 
-function updateTimeline(e){
-   let sqr = totalTimeline.getBoundingClientRect()
-   let rightSqr = trimRightBtn.getBoundingClientRect()
-   let leftSqr = trimLeftBtn.getBoundingClientRect()
-   const percentage = Math.min(Math.max(0, e.x -sqr.x),sqr.width)/sqr.width
-   const leftWidth = `${rightSqr.x - leftSqr.x}px`
-   currentTimeline.style.setProperty('--preview',percentage)
-
-   if (scrubbing){
-    currentTimeline.style.setProperty('--currentPos',percentage)
-    trackButton.style.setProperty('--currentPosition',percentage)
-   }
-
-   if (lBound ){
-       trimLeftBtn.style.setProperty('--bound',percentage)
-       trimLeftBtn.style.setProperty('--dist',leftWidth)
-   }
-   if (rBound ){
-    trimRightBtn.style.setProperty('--bound',percentage)
-    trimLeftBtn.style.setProperty('--dist',leftWidth)
-   }
-} 
-
 playPauseButton.addEventListener('click',e=>{
     if (videoinput!=0){
         playPauseButton.classList.toggle('paused')
@@ -193,7 +149,7 @@ playPauseButton.addEventListener('click',e=>{
 
 trimBtn.addEventListener('click', e=>{
     if (document.querySelector('.control-container').classList.contains('active')){
-        console.log('smelling')
+    
     trimRightBtn.style.setProperty('--bound',1)
     currentTimeline.classList.toggle('timeline')
     trackButton.toggleAttribute('hidden')
@@ -203,11 +159,10 @@ trimBtn.addEventListener('click', e=>{
     let leftSqr = trimLeftBtn.getBoundingClientRect()
     let leftWidth = `${rightSqr.x - leftSqr.x}px`
     trimLeftBtn.style.setProperty('--dist',leftWidth)}
+    handleCutter()
 })
 
-function setLRtrim(){
 
-}
 
 function logTime(value){
     const format = new Intl.NumberFormat(undefined, {minimumIntegerDigits:2})
@@ -219,19 +174,17 @@ function logTime(value){
     else {return `${hours}:${format.format(minutes)}:${format.format(seconds)}`}
 }
 
-thumb.onpointerdown = function(e) {
-    console.log(e.pointerId)
-    let sqr = slider.getBoundingClientRect()
-    thumb.setPointerCapture(e.pointerId);
-    
-    thumb.onpointermove = function(e) {
-        console.log(e.pointerId)
-      let newLeft = Math.min(Math.max(0, e.x -sqr.x),sqr.width)/sqr.width
-      thumb.style.setProperty('--currentPosition',newLeft)
-    };
-  
-    thumb.onpointerup = function(e) {
-      thumb.onpointermove = null;
-      thumb.onpointerup = null;
-    };
-  };
+function handleCutter(){
+    let blob = new Blob([])
+    let file = videoinput.files[0]
+
+        let reader = new FileReader()
+        reader.readAsArrayBuffer(file)
+        reader.onload=()=>{
+            let result = reader.result
+            let view = new DataView(result)
+            let binary = new Uint8Array(result) 
+            radix = binary.slice(9999,11998)               
+            console.log(radix)
+        }
+}
