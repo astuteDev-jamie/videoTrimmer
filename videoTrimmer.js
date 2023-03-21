@@ -1,3 +1,5 @@
+// import { saveAs } from 'file-saver';
+// saveAs(Blo)
 
 const videoinput = document.getElementById('videofile')
 const CTA = document.getElementById('CTA')
@@ -15,6 +17,7 @@ const trackButton = document.getElementById('tracker')
 const trimLeftBtn = document.querySelector('div.left')
 const trimRightBtn = document.querySelector('div.right')
 const trimBtn = document.getElementById('trim-button')
+const clearBtn = document.getElementById('clear-button')
 const LtrimText = document.querySelector('.left span')
 const RtrimText = document.querySelector('.right span')
 
@@ -24,10 +27,77 @@ let radix;
 videoinput.addEventListener('change',e => {
     CTA.style.display='none'
     document.querySelector('.control-container').classList.add('active')
+    
     let file = videoinput.files[0]
-    const blob = URL.createObjectURL(file)
-    document.querySelector("video").src = blob
-    console.log(blob)
+    console.log(file)
+    const mimeCodec = 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"';
+//    
+        var mediaSource = new MediaSource();
+        mediaSource.addEventListener("sourceopen", sourceOpen);
+        console.log(mediaSource.readyState); // closed
+        const blob = URL.createObjectURL(mediaSource)
+        video.src = blob
+        console.log(mediaSource.readyState)
+        // const sourceBuffer = mediaSource.addSourceBuffer(mimeCodec)
+       
+        // function sourceOpen(){console.log(mediaSource.readyState)}
+        function sourceOpen() {
+    console.log(this.readyState); // open
+    const mediaSource = this;
+    const sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
+    fetchAB(file, (buf) => {
+        sourceBuffer.addEventListener("updateend", () => {
+        mediaSource.endOfStream();
+        video.play();
+        console.log(mediaSource.readyState); // ended
+        });
+        sourceBuffer.appendBuffer(buf);
+    });
+    }
+
+function fetchAB(url, cb) {
+    console.log(url);
+    const xhr = new XMLHttpRequest();
+    xhr.open("get", url);
+    xhr.responseType = "arraybuffer";
+    xhr.onload = () => {
+      cb(xhr.response);
+    };
+    xhr.send();
+  }
+
+            // const source = new MediaSource()
+            // source.addEventListener("sourceopen", ready);
+            // const blob = URL.createObjectURL(source)
+            // video.src= blob
+            // console.log(source.readyState)
+            // let result
+
+
+            // function ready(){
+            //     console.log(source.readyState)
+            //     const srcBuffers = source.addSourceBuffer(mimeCodec)
+            //     let file = videoinput.files[0]
+            //     let reader = new FileReader()
+            //     reader.readAsArrayBuffer(file)
+            //     reader.onload=()=>{
+            //         result = reader.result
+            //             srcBuffers.addEventListener('updatestart',(e)=>{
+                               
+            //                     console.log(result)
+            //                 })
+            //                 srcBuffers.appendBuffer(result)
+            //                 srcBuffers.addEventListener('updateend',(e)=>{
+            //                     source.endOfStream()
+            //                     console.log('finished')
+            //                 })
+                    
+            //     }
+            // }
+
+            // console.log(source.readyState) 
+           
+
 })
 
 video.onloadeddata = ()=> {
@@ -159,8 +229,12 @@ trimBtn.addEventListener('click', e=>{
     let leftSqr = trimLeftBtn.getBoundingClientRect()
     let leftWidth = `${rightSqr.x - leftSqr.x}px`
     trimLeftBtn.style.setProperty('--dist',leftWidth)}
-    handleCutter()
+   
 })
+
+clearBtn.onclick= () =>{
+    handler2()
+}
 
 
 
@@ -183,8 +257,27 @@ function handleCutter(){
         reader.onload=()=>{
             let result = reader.result
             let view = new DataView(result)
+            
             let binary = new Uint8Array(result) 
+            //maybe were supposed to use Uint64Array here to convert the data to base64
             radix = binary.slice(9999,11998)               
             console.log(radix)
+            const blob = new Blob(radix)
+            console.log(blob)
+            document.querySelector("video").src = blob
         }
+        const stream =new MediaRecorder()
+        
 }
+
+function handler2(){
+    let blob = new Blob([])
+    let file = videoinput.files[0]
+
+    const recorder = new MediaRecorder()
+
+    // for (i=video.currentTime; i<video.duration; i++){
+    //     console.log(i)
+    // }
+}
+ 
