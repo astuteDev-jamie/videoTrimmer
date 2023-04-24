@@ -29,74 +29,27 @@ videoinput.addEventListener('change',e => {
     document.querySelector('.control-container').classList.add('active')
     
     let file = videoinput.files[0]
-    console.log(file)
-    const mimeCodec = 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"';
-//    
-//         var mediaSource = new MediaSource();
-//         mediaSource.addEventListener("sourceopen", sourceOpen);
-//         console.log(mediaSource.readyState); // closed
-//         const blob = URL.createObjectURL(mediaSource)
-//         video.src = blob
-//         console.log(mediaSource.readyState)
-//         // const sourceBuffer = mediaSource.addSourceBuffer(mimeCodec)
-       
-//         // function sourceOpen(){console.log(mediaSource.readyState)}
-//         function sourceOpen() {
-//     console.log(this.readyState); // open
-//     const mediaSource = this;
-//     const sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
-//     fetchAB(file, (buf) => {
-//         sourceBuffer.addEventListener("updateend", () => {
-//         mediaSource.endOfStream();
-//         video.play();
-//         console.log(mediaSource.readyState); // ended
-//         });
-//         sourceBuffer.appendBuffer(buf);
-//     });
-//     }
-
-// function fetchAB(url, cb) {
-//     console.log(url);
-//     const xhr = new XMLHttpRequest();
-//     xhr.open("get", url);
-//     xhr.responseType = "arraybuffer";
-//     xhr.onload = () => {
-//       cb(xhr.response);
-//     };
-//     xhr.send();
-//   }
-
-            const source = new MediaSource()
-            source.addEventListener("sourceopen", ready);
-            const blob = URL.createObjectURL(source)
-            video.src= blob
-            console.log(source.readyState)
-            let result
-
-
-            function ready(){
-                console.log(source.readyState)
-                const srcBuffers = source.addSourceBuffer(mimeCodec)
-                let file = videoinput.files[0]
-                let reader = new FileReader()
-                reader.readAsArrayBuffer(file)
-                reader.onload=()=>{
-                    result = reader.result   
-                }
-                srcBuffers.addEventListener('updatestart',(e)=>{
-                               
-                    console.log(result)
-                })
-                srcBuffers.appendBuffer(result)
-                srcBuffers.addEventListener('updateend',(e)=>{
-                    source.endOfStream()
-                    console.log('finished')
-                })
-            }
-
+    const mimeCodec = 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"'
+    let reader = new FileReader()
+    reader.readAsArrayBuffer(file)
+    reader.onload = ()=>{
+        const result = reader.result
+        
+        const source = new MediaSource()
+        source.addEventListener("sourceopen", (e)=>{
             console.log(source.readyState) 
-           
-
+            const srcBuffers = source.addSourceBuffer(mimeCodec)
+            srcBuffers.appendBuffer(result)
+            console.log(srcBuffers.updating,source.readyState)
+            source.endOfStream()
+                srcBuffers.addEventListener('updateend',(e)=>{
+                    console.log(srcBuffers.updating,source.readyState)
+                    
+                })
+        });
+        const blob = URL.createObjectURL(source)
+        video.src= blob
+    }
 })
 
 video.onloadeddata = ()=> {
