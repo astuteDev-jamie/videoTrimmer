@@ -41,11 +41,11 @@ videoinput.addEventListener('change',e => {
             const srcBuffers = source.addSourceBuffer(mimeCodec)
             srcBuffers.appendBuffer(result)
             console.log(srcBuffers.updating,source.readyState)
-            source.endOfStream()
-                srcBuffers.addEventListener('updateend',(e)=>{
-                    console.log(srcBuffers.updating,source.readyState)
-                    
-                })
+            srcBuffers.addEventListener('update',(e)=>{
+                source.endOfStream()
+                console.log(srcBuffers.updating,source.readyState)
+                video.play()
+            })
         });
         const blob = URL.createObjectURL(source)
         video.src= blob
