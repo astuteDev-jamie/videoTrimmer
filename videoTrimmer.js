@@ -32,20 +32,6 @@ videoinput.addEventListener('change',e => {
     console.log(file)
     const mimeCodec = 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"';
 //    
-//         var mediaSource = new MediaSource();
-//         mediaSource.addEventListener("sourceopen", sourceOpen);
-//         console.log(mediaSource.readyState); // closed
-//         const blob = URL.createObjectURL(mediaSource)
-//         video.src = blob
-//         console.log(mediaSource.readyState)
-//         // const sourceBuffer = mediaSource.addSourceBuffer(mimeCodec)
-       
-//         // function sourceOpen(){console.log(mediaSource.readyState)}
-//         function sourceOpen() {
-//     console.log(this.readyState); // open
-//     const mediaSource = this;
-//     const sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
-//     fetchAB(file, (buf) => {
 //         sourceBuffer.addEventListener("updateend", () => {
 //         mediaSource.endOfStream();
 //         video.play();
