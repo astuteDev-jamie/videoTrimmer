@@ -29,52 +29,27 @@ videoinput.addEventListener('change',e => {
     document.querySelector('.control-container').classList.add('active')
     
     let file = videoinput.files[0]
+    const mimeCodec = 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"'
     let reader = new FileReader()
     reader.readAsArrayBuffer(file)
-    let result
-    let choice
-    reader.onload=()=>{
-        result = reader.result  
-        // let binary = new Uint8Array(result)
-        // console.log(result.byteLength)
-        // choice = binary.slice(0, 1001) 
-        // let arr = []
-        // let chunk = 10000
-        // // for (i = 0; i<binary.byteLength)
+    reader.onload = ()=>{
+        const result = reader.result
+        
+        const source = new MediaSource()
+        source.addEventListener("sourceopen", (e)=>{
+            console.log(source.readyState) 
+            const srcBuffers = source.addSourceBuffer(mimeCodec)
+            srcBuffers.appendBuffer(result)
+            console.log(srcBuffers.updating,source.readyState)
+            srcBuffers.addEventListener('update',(e)=>{
+                source.endOfStream()
+                console.log(srcBuffers.updating,source.readyState)
+                video.play()
+            })
+        });
+        const blob = URL.createObjectURL(source)
+        video.src= blob
     }
-    
-            const mimeCodec ='video/mp4; codecs="avc1.640029, mp4a.40.2"';
-            const source = new MediaSource()
-            source.addEventListener("sourceopen", sourceopen);
-            const blob = URL.createObjectURL(source)
-            video.src= blob
-            console.log(source.readyState)
-            
-
-            function sourceopen(){
-                const srcBuffers = source.addSourceBuffer(mimeCodec)
-            }
-
-
-            // function ready(){
-            //     console.log(source.readyState)
-            //     const srcBuffers = source.addSourceBuffer(mimeCodec)
-               
-            //     
-            //     srcBuffers.addEventListener('updatestart',(e)=>{
-                               
-            //         console.log(choice)
-            //     })
-            //     srcBuffers.appendBuffer(choice)
-            //     srcBuffers.addEventListener('updateend',(e)=>{
-            //         source.endOfStream()
-            //         console.log('finished')
-            //     })
-            // }
-
-            // console.log(source.readyState) 
-           
-
 })
 
 video.onloadeddata = ()=> {
